@@ -1,13 +1,14 @@
-import { formElements } from './form';
+import { removeRedBorder } from './render/renderBorder';
 
 export default () => {
-  const form = formElements;
+  const form = document.querySelector('.form');
   const formKeys = Object.keys(form);
   formKeys.forEach((el) => {
     if (el === 'rulesAccept') {
       form[el].removeAttribute('checked');
     } else {
       form[el].value = '';
+      removeRedBorder(form[el]);
     }
   });
 };
