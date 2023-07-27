@@ -65,37 +65,98 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _isEmpty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isEmpty */ "./src/js/form/check/isEmpty.js");
-/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../form */ "./src/js/form/form.js");
-/* harmony import */ var _controls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./controls */ "./src/js/form/check/controls.js");
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../form */ "./src/js/form/form.js");
+/* harmony import */ var _controls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controls */ "./src/js/form/check/controls.js");
+/* harmony import */ var _render_renderErrMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../render/renderErrMessage */ "./src/js/form/render/renderErrMessage.js");
+/* harmony import */ var _render_renderBorder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../render/renderBorder */ "./src/js/form/render/renderBorder.js");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../state */ "./src/js/state.js");
+/* harmony import */ var _checkForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./checkForm */ "./src/js/form/check/checkForm.js");
+
+
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
   const {
-    email
-  } = _form__WEBPACK_IMPORTED_MODULE_1__.formElements;
-  email.addEventListener('input', () => {
-    const pEl = email.nextElementSibling;
-    if (pEl && pEl.nodeName === 'P') {
-      pEl.remove();
-    }
-  });
-  email.addEventListener('blur', _ref => {
+    emailEl
+  } = _form__WEBPACK_IMPORTED_MODULE_0__.formElements;
+  emailEl.addEventListener('input', _ref => {
     let {
       target
     } = _ref;
     const {
       value
     } = target;
-    if ((0,_isEmpty__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(value)) {
-      const nextEl = email.nextElementSibling;
-      if (nextEl.nodeName !== 'P') {
-        const textEl = (0,_controls__WEBPACK_IMPORTED_MODULE_2__.renderErrMessage)(_controls__WEBPACK_IMPORTED_MODULE_2__.errors.emptyErr);
-        email.insertAdjacentElement('afterend', textEl);
+    _state__WEBPACK_IMPORTED_MODULE_4__["default"].form.email = value;
+    (0,_checkForm__WEBPACK_IMPORTED_MODULE_5__["default"])();
+    const pEl = (0,_controls__WEBPACK_IMPORTED_MODULE_1__.getNextSubling)(emailEl);
+    if ((0,_controls__WEBPACK_IMPORTED_MODULE_1__.isNodeP)(pEl)) {
+      (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_3__.removeRedBorder)(emailEl);
+      pEl.remove();
+    }
+  });
+  emailEl.addEventListener('blur', _ref2 => {
+    let {
+      target
+    } = _ref2;
+    const {
+      value
+    } = target;
+    if ((0,_controls__WEBPACK_IMPORTED_MODULE_1__.isEmpty)(value)) {
+      const nextEl = (0,_controls__WEBPACK_IMPORTED_MODULE_1__.getNextSubling)(emailEl);
+      (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_3__.addRedBorder)(emailEl);
+      if (!(0,_controls__WEBPACK_IMPORTED_MODULE_1__.isNodeP)(nextEl)) {
+        const textEl = (0,_render_renderErrMessage__WEBPACK_IMPORTED_MODULE_2__["default"])(_controls__WEBPACK_IMPORTED_MODULE_1__.errors.emptyErr);
+        (0,_controls__WEBPACK_IMPORTED_MODULE_1__.addNextEl)(emailEl, textEl);
       }
     }
   });
+});
+
+/***/ }),
+
+/***/ "./src/js/form/check/checkForm.js":
+/*!****************************************!*\
+  !*** ./src/js/form/check/checkForm.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../state */ "./src/js/state.js");
+
+const validateForm = () => {
+  const {
+    form
+  } = _state__WEBPACK_IMPORTED_MODULE_0__["default"];
+  const keys = Object.keys(form);
+  const validateResult = [];
+  keys.forEach(el => {
+    if (el === 'rulesAccept') {
+      if (!form[el]) {
+        validateResult.push(el);
+      }
+    } else {
+      if (form[el] === '') {
+        validateResult.push(el);
+      }
+    }
+  });
+  return validateResult;
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
+  const regBtn = document.querySelector('.content__btn');
+  const submitBtnEl = document.querySelector('.submit__btn');
+  const validateResult = validateForm();
+  if (validateResult.length === 0) {
+    submitBtnEl.disabled = false;
+    submitBtnEl.classList.remove('disabled');
+    regBtn.classList.add('content__btn-ok');
+    regBtn.disabled = true;
+  }
 });
 
 /***/ }),
@@ -110,34 +171,160 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _isEmpty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./isEmpty */ "./src/js/form/check/isEmpty.js");
-/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../form */ "./src/js/form/form.js");
-/* harmony import */ var _controls__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./controls */ "./src/js/form/check/controls.js");
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../form */ "./src/js/form/form.js");
+/* harmony import */ var _controls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controls */ "./src/js/form/check/controls.js");
+/* harmony import */ var _render_renderErrMessage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../render/renderErrMessage */ "./src/js/form/render/renderErrMessage.js");
+/* harmony import */ var _render_renderBorder__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../render/renderBorder */ "./src/js/form/render/renderBorder.js");
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../state */ "./src/js/state.js");
+/* harmony import */ var _checkForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./checkForm */ "./src/js/form/check/checkForm.js");
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
+
+
+
+const nicknameRegex = /^[a-zA-Z0-9_]{3,40}$/;
+const latinsRegex = /^[a-zA-Z]/;
+const symbolsRegex = /^[a-zA-Z0-9_]*$/;
+const nickErrs = {
+  firstLetter: 'Никнейм должен начинаться с буквы',
+  length: 'Должно быть от 3 до 40 символов',
+  latins: 'Должны быть латинские буквы',
+  symbols: 'Нельзя использовать символы кроме цифр и нижнего подчеркивания (_)'
+};
+const nicknameCheck = nickname => {
   const {
-    nickname
-  } = _form__WEBPACK_IMPORTED_MODULE_1__.formElements;
-  nickname.addEventListener('input', () => {
-    const pEl = nickname.nextElementSibling;
-    if (pEl && pEl.nodeName === 'P') {
+    nicknameEl
+  } = _form__WEBPACK_IMPORTED_MODULE_0__.formElements;
+  if (!nicknameRegex.test(nickname)) {
+    if (nickname.length < 3 || nickname.length > 40) {
+      const textEl = (0,_render_renderErrMessage__WEBPACK_IMPORTED_MODULE_2__["default"])(nickErrs.length);
+      (0,_controls__WEBPACK_IMPORTED_MODULE_1__.addNextEl)(nicknameEl, textEl);
+      (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_3__.addRedBorder)(nicknameEl);
+    }
+    if (!latinsRegex.test(nickname)) {
+      const textEl = (0,_render_renderErrMessage__WEBPACK_IMPORTED_MODULE_2__["default"])(nickErrs.firstLetter);
+      (0,_controls__WEBPACK_IMPORTED_MODULE_1__.addNextEl)(nicknameEl, textEl);
+      (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_3__.addRedBorder)(nicknameEl);
+    }
+    if (!symbolsRegex.test(nickname)) {
+      const textEl = (0,_render_renderErrMessage__WEBPACK_IMPORTED_MODULE_2__["default"])(nickErrs.symbols);
+      (0,_controls__WEBPACK_IMPORTED_MODULE_1__.addNextEl)(nicknameEl, textEl);
+      (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_3__.addRedBorder)(nicknameEl);
+    }
+  } else {
+    const pEl = (0,_controls__WEBPACK_IMPORTED_MODULE_1__.getNextSubling)(nicknameEl);
+    if ((0,_controls__WEBPACK_IMPORTED_MODULE_1__.isNodeP)(pEl)) {
+      (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_3__.removeRedBorder)(nicknameEl);
       pEl.remove();
     }
-  });
-  nickname.addEventListener('blur', _ref => {
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
+  const {
+    nicknameEl
+  } = _form__WEBPACK_IMPORTED_MODULE_0__.formElements;
+  nicknameEl.addEventListener('input', _ref => {
     let {
       target
     } = _ref;
     const {
       value
     } = target;
-    if ((0,_isEmpty__WEBPACK_IMPORTED_MODULE_0__.isEmpty)(value)) {
-      const nextEl = nickname.nextElementSibling;
-      if (nextEl.nodeName !== 'P') {
-        const textEl = (0,_controls__WEBPACK_IMPORTED_MODULE_2__.renderErrMessage)(_controls__WEBPACK_IMPORTED_MODULE_2__.errors.emptyErr);
-        nickname.insertAdjacentElement('afterend', textEl);
+    _state__WEBPACK_IMPORTED_MODULE_4__["default"].form.nickname = value;
+    (0,_checkForm__WEBPACK_IMPORTED_MODULE_5__["default"])();
+    const pEl = (0,_controls__WEBPACK_IMPORTED_MODULE_1__.getNextSubling)(nicknameEl);
+    if ((0,_controls__WEBPACK_IMPORTED_MODULE_1__.isNodeP)(pEl)) {
+      (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_3__.removeRedBorder)(nicknameEl);
+      pEl.remove();
+    }
+    if (!(0,_controls__WEBPACK_IMPORTED_MODULE_1__.isEmpty)(value)) {
+      nicknameCheck(value);
+    }
+  });
+  nicknameEl.addEventListener('blur', _ref2 => {
+    let {
+      target
+    } = _ref2;
+    const {
+      value
+    } = target;
+    if ((0,_controls__WEBPACK_IMPORTED_MODULE_1__.isEmpty)(value)) {
+      const nextEl = (0,_controls__WEBPACK_IMPORTED_MODULE_1__.getNextSubling)(nicknameEl);
+      (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_3__.addRedBorder)(nicknameEl);
+      if (!(0,_controls__WEBPACK_IMPORTED_MODULE_1__.isNodeP)(nextEl)) {
+        const textEl = (0,_render_renderErrMessage__WEBPACK_IMPORTED_MODULE_2__["default"])(_controls__WEBPACK_IMPORTED_MODULE_1__.errors.emptyErr);
+        (0,_controls__WEBPACK_IMPORTED_MODULE_1__.addNextEl)(nicknameEl, textEl);
+      }
+    }
+  });
+});
+
+/***/ }),
+
+/***/ "./src/js/form/check/checkPassRepit.js":
+/*!*********************************************!*\
+  !*** ./src/js/form/check/checkPassRepit.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../state */ "./src/js/state.js");
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../form */ "./src/js/form/form.js");
+/* harmony import */ var _render_renderBorder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../render/renderBorder */ "./src/js/form/render/renderBorder.js");
+/* harmony import */ var _render_renderErrMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../render/renderErrMessage */ "./src/js/form/render/renderErrMessage.js");
+/* harmony import */ var _checkForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./checkForm */ "./src/js/form/check/checkForm.js");
+/* harmony import */ var _controls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./controls */ "./src/js/form/check/controls.js");
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
+  const {
+    passwordConfirmEl
+  } = _form__WEBPACK_IMPORTED_MODULE_1__.formElements;
+  passwordConfirmEl.addEventListener('input', _ref => {
+    let {
+      target
+    } = _ref;
+    const {
+      value
+    } = target;
+    _state__WEBPACK_IMPORTED_MODULE_0__["default"].form.passwordConfirm = value;
+    (0,_checkForm__WEBPACK_IMPORTED_MODULE_4__["default"])();
+    const pEl = (0,_controls__WEBPACK_IMPORTED_MODULE_5__.getNextSubling)(passwordConfirmEl);
+    if ((0,_controls__WEBPACK_IMPORTED_MODULE_5__.isNodeP)(pEl)) {
+      passwordConfirmEl.classList.remove('form__input-danger');
+      pEl.remove();
+    }
+    if (value.length > 0) {
+      if (!(0,_controls__WEBPACK_IMPORTED_MODULE_5__.isSame)(value, _state__WEBPACK_IMPORTED_MODULE_0__["default"].form.password)) {
+        (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_2__.addRedBorder)(passwordConfirmEl);
+        const textEl = (0,_render_renderErrMessage__WEBPACK_IMPORTED_MODULE_3__["default"])(_controls__WEBPACK_IMPORTED_MODULE_5__.errors.passwordNotConfirm);
+        (0,_controls__WEBPACK_IMPORTED_MODULE_5__.addNextEl)(passwordConfirmEl, textEl);
+      } else {
+        (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_2__.removeRedBorder)(passwordConfirmEl);
+      }
+    }
+  });
+  passwordConfirmEl.addEventListener('blur', _ref2 => {
+    let {
+      target
+    } = _ref2;
+    const {
+      value
+    } = target;
+    if ((0,_controls__WEBPACK_IMPORTED_MODULE_5__.isEmpty)(value)) {
+      const nextEl = (0,_controls__WEBPACK_IMPORTED_MODULE_5__.getNextSubling)(passwordConfirmEl);
+      passwordConfirmEl.classList.add('form__input-danger');
+      if (!(0,_controls__WEBPACK_IMPORTED_MODULE_5__.isNodeP)(nextEl)) {
+        const textEl = (0,_render_renderErrMessage__WEBPACK_IMPORTED_MODULE_3__["default"])(_controls__WEBPACK_IMPORTED_MODULE_5__.errors.emptyErr);
+        (0,_controls__WEBPACK_IMPORTED_MODULE_5__.addNextEl)(passwordConfirmEl, textEl);
       }
     }
   });
@@ -157,9 +344,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../state */ "./src/js/state.js");
 /* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../form */ "./src/js/form/form.js");
-/* harmony import */ var _render_renderErrs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../render/renderErrs */ "./src/js/form/render/renderErrs.js");
-/* harmony import */ var _controls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./controls */ "./src/js/form/check/controls.js");
-/* harmony import */ var _isEmpty__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./isEmpty */ "./src/js/form/check/isEmpty.js");
+/* harmony import */ var _render_renderBorder__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../render/renderBorder */ "./src/js/form/render/renderBorder.js");
+/* harmony import */ var _render_renderErrMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../render/renderErrMessage */ "./src/js/form/render/renderErrMessage.js");
+/* harmony import */ var _render_renderPassErrs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../render/renderPassErrs */ "./src/js/form/render/renderPassErrs.js");
+/* harmony import */ var _checkForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./checkForm */ "./src/js/form/check/checkForm.js");
+/* harmony import */ var _controls__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./controls */ "./src/js/form/check/controls.js");
+
+
 
 
 
@@ -183,58 +374,92 @@ const passwordCheck = value => {
   checkStatus.numberErr = isNumbersErr ? 'error' : 'ok';
   checkStatus.letterErr = isLetterErr ? 'error' : 'ok';
 };
-const isSame = (value1, value2) => value1 === value2;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
   const {
-    password
+    passwordEl
   } = _form__WEBPACK_IMPORTED_MODULE_1__.formElements;
   const formErrsEl = document.querySelector('.form__errors');
-  password.addEventListener('input', _ref => {
+  passwordEl.addEventListener('input', _ref => {
     let {
       target
     } = _ref;
-    const pEl = formErrsEl.nextElementSibling;
-    if (pEl && pEl.nodeName === 'P') {
-      pEl.remove();
-    }
     const {
       value
     } = target;
+    _state__WEBPACK_IMPORTED_MODULE_0__["default"].form.password = value;
+    (0,_checkForm__WEBPACK_IMPORTED_MODULE_5__["default"])();
+    const pEl = (0,_controls__WEBPACK_IMPORTED_MODULE_6__.getNextSubling)(formErrsEl);
+    (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_2__.removeRedBorder)(passwordEl);
+    if ((0,_controls__WEBPACK_IMPORTED_MODULE_6__.isNodeP)(pEl)) {
+      pEl.remove();
+    }
     const {
       nickname,
       email
     } = _state__WEBPACK_IMPORTED_MODULE_0__["default"].form;
-    if (value.length > 0) {
-      if (isSame(value, nickname)) {
-        const textEl = (0,_controls__WEBPACK_IMPORTED_MODULE_3__.renderErrMessage)(_controls__WEBPACK_IMPORTED_MODULE_3__.errors.passwordNick);
-        formErrsEl.insertAdjacentElement('afterend', textEl);
-      } else if (isSame(value, email)) {
-        const textEl = (0,_controls__WEBPACK_IMPORTED_MODULE_3__.renderErrMessage)(_controls__WEBPACK_IMPORTED_MODULE_3__.errors.passwordEmail);
-        formErrsEl.insertAdjacentElement('afterend', textEl);
+    if (!(0,_controls__WEBPACK_IMPORTED_MODULE_6__.isEmpty)(value)) {
+      if ((0,_controls__WEBPACK_IMPORTED_MODULE_6__.isSame)(value, nickname)) {
+        (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_2__.addRedBorder)(passwordEl);
+        const textEl = (0,_render_renderErrMessage__WEBPACK_IMPORTED_MODULE_3__["default"])(_controls__WEBPACK_IMPORTED_MODULE_6__.errors.passwordNick);
+        (0,_controls__WEBPACK_IMPORTED_MODULE_6__.addNextEl)(formErrsEl, textEl);
+      } else if ((0,_controls__WEBPACK_IMPORTED_MODULE_6__.isSame)(value, email)) {
+        (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_2__.addRedBorder)(passwordEl);
+        const textEl = (0,_render_renderErrMessage__WEBPACK_IMPORTED_MODULE_3__["default"])(_controls__WEBPACK_IMPORTED_MODULE_6__.errors.passwordEmail);
+        (0,_controls__WEBPACK_IMPORTED_MODULE_6__.addNextEl)(formErrsEl, textEl);
       } else {
-        const pEl = formErrsEl.nextElementSibling;
+        (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_2__.removeRedBorder)(passwordEl);
+        const pEl = (0,_controls__WEBPACK_IMPORTED_MODULE_6__.getNextSubling)(formErrsEl);
         if (pEl && pEl.nodeName === 'P') {
           pEl.remove();
         }
         passwordCheck(value);
-        (0,_render_renderErrs__WEBPACK_IMPORTED_MODULE_2__["default"])(checkStatus);
+        (0,_render_renderPassErrs__WEBPACK_IMPORTED_MODULE_4__["default"])(checkStatus);
       }
     }
   });
-  password.addEventListener('blur', _ref2 => {
+  passwordEl.addEventListener('blur', _ref2 => {
     let {
       target
     } = _ref2;
     const {
       value
     } = target;
-    if ((0,_isEmpty__WEBPACK_IMPORTED_MODULE_4__.isEmpty)(value)) {
-      const nextEl = formErrsEl.nextElementSibling;
-      if (nextEl.nodeName !== 'P') {
-        const textEl = (0,_controls__WEBPACK_IMPORTED_MODULE_3__.renderErrMessage)(_controls__WEBPACK_IMPORTED_MODULE_3__.errors.emptyErr);
-        formErrsEl.insertAdjacentElement('afterend', textEl);
+    if ((0,_controls__WEBPACK_IMPORTED_MODULE_6__.isEmpty)(value)) {
+      const nextEl = (0,_controls__WEBPACK_IMPORTED_MODULE_6__.getNextSubling)(formErrsEl);
+      (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_2__.addRedBorder)(passwordEl);
+      if (!(0,_controls__WEBPACK_IMPORTED_MODULE_6__.isNodeP)(nextEl)) {
+        const textEl = (0,_render_renderErrMessage__WEBPACK_IMPORTED_MODULE_3__["default"])(_controls__WEBPACK_IMPORTED_MODULE_6__.errors.emptyErr);
+        (0,_controls__WEBPACK_IMPORTED_MODULE_6__.addNextEl)(formErrsEl, textEl);
       }
     }
+  });
+});
+
+/***/ }),
+
+/***/ "./src/js/form/check/checkRulesAccept.js":
+/*!***********************************************!*\
+  !*** ./src/js/form/check/checkRulesAccept.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../state */ "./src/js/state.js");
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../form */ "./src/js/form/form.js");
+/* harmony import */ var _checkForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./checkForm */ "./src/js/form/check/checkForm.js");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
+  const {
+    rulesAcceptEl
+  } = _form__WEBPACK_IMPORTED_MODULE_1__.formElements;
+  rulesAcceptEl.addEventListener('input', () => {
+    _state__WEBPACK_IMPORTED_MODULE_0__["default"].form.rulesAccept = true;
+    (0,_checkForm__WEBPACK_IMPORTED_MODULE_2__["default"])();
   });
 });
 
@@ -248,50 +473,26 @@ const isSame = (value1, value2) => value1 === value2;
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   addNextEl: () => (/* binding */ addNextEl),
 /* harmony export */   errors: () => (/* binding */ errors),
-/* harmony export */   renderErrMessage: () => (/* binding */ renderErrMessage)
+/* harmony export */   getNextSubling: () => (/* binding */ getNextSubling),
+/* harmony export */   isEmpty: () => (/* binding */ isEmpty),
+/* harmony export */   isNodeP: () => (/* binding */ isNodeP),
+/* harmony export */   isSame: () => (/* binding */ isSame)
 /* harmony export */ });
-/* harmony import */ var _checkEmail__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./checkEmail */ "./src/js/form/check/checkEmail.js");
-/* harmony import */ var _checkNickname__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./checkNickname */ "./src/js/form/check/checkNickname.js");
-/* harmony import */ var _checkPassword__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./checkPassword */ "./src/js/form/check/checkPassword.js");
-
-
-
-const renderErrMessage = text => {
-  const errorMessageEl = document.createElement('p');
-  errorMessageEl.classList.add('text', 'text-danger');
-  errorMessageEl.textContent = text;
-  return errorMessageEl;
+const isEmpty = value => value.trim() === '';
+const isSame = (value1, value2) => value1 === value2;
+const getNextSubling = el => el.nextElementSibling;
+const addNextEl = function (el, nextEl) {
+  let direction = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'afterend';
+  el.insertAdjacentElement(direction, nextEl);
 };
+const isNodeP = pEl => pEl.nodeName === 'P';
 const errors = {
   emptyErr: 'Поле обязательно для заполнения',
   passwordNick: 'Пароль не должен совпадать с Никнеймом',
   passwordEmail: 'Пароль не должен совпадать с e-mail',
   passwordNotConfirm: 'Введённые пароли не совпадают'
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
-  (0,_checkEmail__WEBPACK_IMPORTED_MODULE_0__["default"])();
-  (0,_checkNickname__WEBPACK_IMPORTED_MODULE_1__["default"])();
-  (0,_checkPassword__WEBPACK_IMPORTED_MODULE_2__["default"])();
-});
-
-/***/ }),
-
-/***/ "./src/js/form/check/isEmpty.js":
-/*!**************************************!*\
-  !*** ./src/js/form/check/isEmpty.js ***!
-  \**************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   isEmpty: () => (/* binding */ isEmpty)
-/* harmony export */ });
-const isEmpty = value => {
-  if (value.trim() === '') {
-    return 'emptyErr';
-  }
 };
 
 /***/ }),
@@ -307,54 +508,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   formElements: () => (/* binding */ formElements)
 /* harmony export */ });
-/* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state */ "./src/js/state.js");
-/* harmony import */ var _check_controls__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./check/controls */ "./src/js/form/check/controls.js");
+/* harmony import */ var _check_checkEmail__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./check/checkEmail */ "./src/js/form/check/checkEmail.js");
+/* harmony import */ var _check_checkNickname__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./check/checkNickname */ "./src/js/form/check/checkNickname.js");
+/* harmony import */ var _check_checkPassRepit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./check/checkPassRepit */ "./src/js/form/check/checkPassRepit.js");
+/* harmony import */ var _check_checkPassword__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./check/checkPassword */ "./src/js/form/check/checkPassword.js");
+/* harmony import */ var _check_checkRulesAccept__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./check/checkRulesAccept */ "./src/js/form/check/checkRulesAccept.js");
+
+
+
 
 
 const formElements = {
-  email: document.getElementById('email'),
-  nickname: document.getElementById('nickname'),
-  password: document.getElementById('password'),
-  passwordConfirm: document.getElementById('passwordConfirm'),
-  rulesAccept: document.getElementById('rulesAccept')
+  emailEl: document.getElementById('email'),
+  nicknameEl: document.getElementById('nickname'),
+  passwordEl: document.getElementById('password'),
+  passwordConfirmEl: document.getElementById('passwordConfirm'),
+  rulesAcceptEl: document.getElementById('rulesAccept')
 };
-const {
-  email,
-  nickname,
-  password,
-  passwordConfirm,
-  rulesAccept
-} = formElements;
-(0,_check_controls__WEBPACK_IMPORTED_MODULE_1__["default"])();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
-  email.focus();
-  email.addEventListener('input', e => {
-    const {
-      value
-    } = e.target;
-    _state__WEBPACK_IMPORTED_MODULE_0__["default"].form.email = value;
-  });
-  nickname.addEventListener('input', e => {
-    const {
-      value
-    } = e.target;
-    _state__WEBPACK_IMPORTED_MODULE_0__["default"].form.nickname = value;
-  });
-  password.addEventListener('input', e => {
-    const {
-      value
-    } = e.target;
-    _state__WEBPACK_IMPORTED_MODULE_0__["default"].form.password = value;
-  });
-  passwordConfirm.addEventListener('input', e => {
-    const {
-      value
-    } = e.target;
-    _state__WEBPACK_IMPORTED_MODULE_0__["default"].form.passwordConfirm = value;
-  });
-  rulesAccept.addEventListener('input', () => {
-    _state__WEBPACK_IMPORTED_MODULE_0__["default"].form.rulesAccept = true;
-  });
+  (0,_check_checkEmail__WEBPACK_IMPORTED_MODULE_0__["default"])();
+  (0,_check_checkNickname__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  (0,_check_checkPassword__WEBPACK_IMPORTED_MODULE_3__["default"])();
+  (0,_check_checkPassRepit__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  (0,_check_checkRulesAccept__WEBPACK_IMPORTED_MODULE_4__["default"])();
 });
 
 /***/ }),
@@ -369,26 +545,68 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form */ "./src/js/form/form.js");
+/* harmony import */ var _check_controls__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./check/controls */ "./src/js/form/check/controls.js");
+/* harmony import */ var _render_renderBorder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./render/renderBorder */ "./src/js/form/render/renderBorder.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (() => {
-  const form = _form__WEBPACK_IMPORTED_MODULE_0__.formElements;
+  const form = document.querySelector('.form');
   const formKeys = Object.keys(form);
   formKeys.forEach(el => {
     if (el === 'rulesAccept') {
       form[el].removeAttribute('checked');
     } else {
       form[el].value = '';
+      (0,_render_renderBorder__WEBPACK_IMPORTED_MODULE_1__.removeRedBorder)(form[el]);
     }
   });
 });
 
 /***/ }),
 
-/***/ "./src/js/form/render/renderErrs.js":
-/*!******************************************!*\
-  !*** ./src/js/form/render/renderErrs.js ***!
-  \******************************************/
+/***/ "./src/js/form/render/renderBorder.js":
+/*!********************************************!*\
+  !*** ./src/js/form/render/renderBorder.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addRedBorder: () => (/* binding */ addRedBorder),
+/* harmony export */   removeRedBorder: () => (/* binding */ removeRedBorder)
+/* harmony export */ });
+const addRedBorder = el => {
+  el.classList.add('form__input-danger');
+};
+const removeRedBorder = el => {
+  el.classList.remove('form__input-danger');
+};
+
+/***/ }),
+
+/***/ "./src/js/form/render/renderErrMessage.js":
+/*!************************************************!*\
+  !*** ./src/js/form/render/renderErrMessage.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (text => {
+  const errorMessageEl = document.createElement('p');
+  errorMessageEl.classList.add('text', 'text-danger');
+  errorMessageEl.textContent = text;
+  return errorMessageEl;
+});
+
+/***/ }),
+
+/***/ "./src/js/form/render/renderPassErrs.js":
+/*!**********************************************!*\
+  !*** ./src/js/form/render/renderPassErrs.js ***!
+  \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -396,6 +614,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   getCheckStyle: () => (/* binding */ getCheckStyle)
 /* harmony export */ });
+/* harmony import */ var _form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../form */ "./src/js/form/form.js");
+/* harmony import */ var _renderBorder__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./renderBorder */ "./src/js/form/render/renderBorder.js");
+
+
 const errors = {
   default: {
     pClass: 'text-default',
@@ -423,13 +645,25 @@ const letterImgEl = letterErrTextEl.previousElementSibling;
     numberErr,
     letterErr
   } = errsStatus;
+  const {
+    passwordEl
+  } = _form__WEBPACK_IMPORTED_MODULE_0__.formElements;
   lengthErrTextEl.classList.remove('text-danger', 'text-ok');
+  if (lengthErr === 'error') {
+    (0,_renderBorder__WEBPACK_IMPORTED_MODULE_1__.addRedBorder)(passwordEl);
+  }
   lengthErrTextEl.classList.add(errors[lengthErr].pClass);
   lengthImgEl.src = errors[lengthErr].img;
   numberErrTextEl.classList.remove('text-danger', 'text-ok');
+  if (numberErr === 'error') {
+    (0,_renderBorder__WEBPACK_IMPORTED_MODULE_1__.addRedBorder)(passwordEl);
+  }
   numberErrTextEl.classList.add(errors[numberErr].pClass);
   numberImgEl.src = errors[numberErr].img;
   letterErrTextEl.classList.remove('text-danger', 'text-ok');
+  if (letterErr === 'error') {
+    (0,_renderBorder__WEBPACK_IMPORTED_MODULE_1__.addRedBorder)(passwordEl);
+  }
   letterErrTextEl.classList.add(errors[letterErr].pClass);
   letterImgEl.src = errors[letterErr].img;
 });
