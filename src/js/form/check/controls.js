@@ -1,23 +1,18 @@
-import checkEmail from './checkEmail';
-import checkNickname from './checkNickname';
-import checkPassword from './checkPassword';
+export const isEmpty = (value) => value.trim() === '';
 
-export const renderErrMessage = (text) => {
-  const errorMessageEl = document.createElement('p');
-  errorMessageEl.classList.add('text', 'text-danger');
-  errorMessageEl.textContent = text;
-  return errorMessageEl;
+export const isSame = (value1, value2) => value1 === value2;
+
+export const getNextSubling = (el) => el.nextElementSibling;
+
+export const addNextEl = (el, nextEl, direction = 'afterend') => {
+  el.insertAdjacentElement(direction, nextEl);
 };
+
+export const isNodeP = (pEl) => pEl.nodeName === 'P';
 
 export const errors = {
   emptyErr: 'Поле обязательно для заполнения',
   passwordNick: 'Пароль не должен совпадать с Никнеймом',
   passwordEmail: 'Пароль не должен совпадать с e-mail',
   passwordNotConfirm: 'Введённые пароли не совпадают',
-};
-
-export default () => {
-  checkEmail();
-  checkNickname();
-  checkPassword();
 };
