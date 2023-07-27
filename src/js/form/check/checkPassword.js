@@ -1,8 +1,17 @@
 import state from '../../state';
 import { formElements } from '../form';
-import renderErrs from '../render/renderErrs';
-import { errors, renderErrMessage } from './controls';
-import { isEmpty } from './isEmpty';
+import { addRedBorder, removeRedBorder } from '../render/renderBorder';
+import renderErrMessage from '../render/renderErrMessage';
+import renderPassErrs from '../render/renderPassErrs';
+import checkForm from './checkForm';
+import {
+  errors,
+  getNextSubling,
+  isEmpty,
+  isSame,
+  isNodeP,
+  addNextEl,
+} from './controls';
 
 const checkStatus = {
   lengthErr: 'default',
@@ -27,47 +36,52 @@ const passwordCheck = (value) => {
   checkStatus.letterErr = isLetterErr ? 'error' : 'ok';
 };
 
-const isSame = (value1, value2) => value1 === value2;
-
 export default () => {
-  const { password } = formElements;
+  const { passwordEl } = formElements;
   const formErrsEl = document.querySelector('.form__errors');
 
-  password.addEventListener('input', ({ target }) => {
-    const pEl = formErrsEl.nextElementSibling;
-    if (pEl && pEl.nodeName === 'P') {
+  passwordEl.addEventListener('input', ({ target }) => {
+    const { value } = target;
+    state.form.password = value;
+    checkForm();
+
+    const pEl = getNextSubling(formErrsEl);
+    removeRedBorder(passwordEl);
+    if (isNodeP(pEl)) {
       pEl.remove();
     }
-
-    const { value } = target;
     const { nickname, email } = state.form;
 
-    if (value.length > 0) {
+    if (!isEmpty(value)) {
       if (isSame(value, nickname)) {
+        addRedBorder(passwordEl);
         const textEl = renderErrMessage(errors.passwordNick);
-        formErrsEl.insertAdjacentElement('afterend', textEl);
+        addNextEl(formErrsEl, textEl);
       } else if (isSame(value, email)) {
+        addRedBorder(passwordEl);
         const textEl = renderErrMessage(errors.passwordEmail);
-        formErrsEl.insertAdjacentElement('afterend', textEl);
+        addNextEl(formErrsEl, textEl);
       } else {
-        const pEl = formErrsEl.nextElementSibling;
+        removeRedBorder(passwordEl);
+        const pEl = getNextSubling(formErrsEl);
         if (pEl && pEl.nodeName === 'P') {
           pEl.remove();
         }
         passwordCheck(value);
-        renderErrs(checkStatus);
+        renderPassErrs(checkStatus);
       }
     }
   });
 
-  password.addEventListener('blur', ({ target }) => {
+  passwordEl.addEventListener('blur', ({ target }) => {
     const { value } = target;
 
     if (isEmpty(value)) {
-      const nextEl = formErrsEl.nextElementSibling;
-      if (nextEl.nodeName !== 'P') {
+      const nextEl = getNextSubling(formErrsEl);
+      addRedBorder(passwordEl);
+      if (!isNodeP(nextEl)) {
         const textEl = renderErrMessage(errors.emptyErr);
-        formErrsEl.insertAdjacentElement('afterend', textEl);
+        addNextEl(formErrsEl, textEl);
       }
     }
   });
