@@ -20,6 +20,10 @@
     line-height: normal;
     cursor: pointer;
 
+        &-ok {
+            background: var(--green);
+        }
+
         &:hover {
             opacity: 0.8;
         }
