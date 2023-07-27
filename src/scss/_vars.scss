@@ -1,0 +1,26 @@
+:root {
+    // base
+    --font-family: "Roboto", sans-serif;
+    --content-width: 1152px;
+    --container-offset: 15px;
+    --container-width: calc(var(--content-width) + (var(--container-offset) * 2));
+  
+    // font sizes
+    --main-size: 14px;
+    --small-size: 12px;
+    --big-size: 24px;
+  
+    // colors
+    --grey: #777;
+    --light-grey: #DDDDDD;
+    --blue: #558CB7;
+    --red: #9F2B11;
+    --green: #007B1B;
+    --blue: #558CB7;
+    --light-blue: #82B3D9;
+    --black: #000000;
+
+
+
+    --offset: 32px;
+  }

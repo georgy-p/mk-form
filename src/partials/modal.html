@@ -1,0 +1,45 @@
+<section class="modal fade">
+    <div class="modal__inner flex" aria-modal="true">
+        <div class="container modal__container">
+            <div class="modal__header flex">
+                <h2 class="modal__title">Регистрация</h2>
+                <button class="btn btn-reset btn-close modal__btn">
+                    <img src="img/btn.png" alt="">
+                </button>
+            </div>
+            <form action="#" class="modal__form form">
+                <label for="email" class="form__label">E-mail</label>
+                <input id="email" type="email" class="form__input">
+                <label for="nickname" class="form__label">Никнейм</label>
+                <input id="nickname" type="text" class="form__input">
+                <label for="password" class="form__label">Пароль</label>
+                <input id="password" type="password" class="form__input mb-7">
+                <span class="form__descr">Пароль должен содержать:</span>
+                <ul class="list-reset form__errors">
+                    <li class="form__error flex">
+                        <img src="img/default.png" alt="" class="form__error__logo">
+                        <p id="lengthErr" class="text text-default">от 6 до 32 символов</p>
+                    </li>
+                    <li class="form__error flex">
+                        <img src="img/default.png" alt="" class="form__error__logo">
+                        <p id="numberErr" class="text text-default">цифру</p>
+                    </li>
+                    <li class="form__error flex">
+                        <img src="img/default.png" alt="" class="form__error__logo">
+                        <p id="letterErr" class="text text-default">заглавную и строчную буквы</p>
+                    </li>
+                    </ul>
+                <label for="passwordConfirm" class="form__label mt-10">Пароль еще раз</label>
+                <input id="passwordConfirm" type="password" class="form__input mb-7">
+                <div class="form__footer flex">
+                    <label for="rulesAccept" class="form__label-checkbox">Я принимаю условия <a class="form__link">Пользовательского соглашения</a></label>
+                    <input id="rulesAccept" type="checkbox" class="form__checkbox">
+                </div>
+                <div class="form__submit submit flex">
+                    <input type="submit" value="Зарегистрироваться" class="submit__btn disabled">
+                </div>
+            </form>
+        </div>
+    </div>
+
+</section>
