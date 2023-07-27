@@ -1,24 +1,38 @@
-import { isEmpty } from './isEmpty';
 import { formElements } from '../form';
-import { errors, renderErrMessage } from './controls';
+import {
+  addNextEl,
+  errors,
+  getNextSubling,
+  isEmpty,
+  isNodeP,
+} from './controls';
+import renderErrMessage from '../render/renderErrMessage';
+import { addRedBorder, removeRedBorder } from '../render/renderBorder';
+import state from '../../state';
+import checkForm from './checkForm';
 
 export default () => {
-  const { email } = formElements;
+  const { emailEl } = formElements;
 
-  email.addEventListener('input', () => {
-    const pEl = email.nextElementSibling;
-    if (pEl && pEl.nodeName === 'P') {
+  emailEl.addEventListener('input', ({ target }) => {
+    const { value } = target;
+    state.form.email = value;
+    checkForm();
+    const pEl = getNextSubling(emailEl);
+    if (isNodeP(pEl)) {
+      removeRedBorder(emailEl);
       pEl.remove();
     }
   });
 
-  email.addEventListener('blur', ({ target }) => {
+  emailEl.addEventListener('blur', ({ target }) => {
     const { value } = target;
     if (isEmpty(value)) {
-      const nextEl = email.nextElementSibling;
-      if (nextEl.nodeName !== 'P') {
+      const nextEl = getNextSubling(emailEl);
+      addRedBorder(emailEl);
+      if (!isNodeP(nextEl)) {
         const textEl = renderErrMessage(errors.emptyErr);
-        email.insertAdjacentElement('afterend', textEl);
+        addNextEl(emailEl, textEl);
       }
     }
   });
